@@ -6,7 +6,6 @@ graph TD
     %% ブロック定義
     ROM["ROM"]
     IR["IR(命令レジスタ)"]
-    DEC["命令デコーダ"]
     ALU["ALU"]
     A["Aレジスタ"]
     C["Cフラグ"]
@@ -14,20 +13,18 @@ graph TD
     OUTPUT["OUTPUT"]
     PC["PC(プログラムカウンタ)"]
 
-    %% ROMから命令デコーダー
+    %% ROMからIR
     ROM --> IR
-    IR --> DEC
 
-    %% 命令デコーダー関係性
-    DEC --> PC
-    DEC --> A
-    DEC --> C
-    DEC --> ALU
-    DEC --> INPUT
-    DEC --> OUTPUT
+    %% IRから各ブロックへの制御
+    IR --> PC
+    IR --> A
+    IR --> C
+    IR --> ALU
+    IR --> INPUT
+    IR --> OUTPUT
 
-    %% Aレジスタ、ALUの補足関係性
-    INPUT --> A
+    %% ALUの関係性補足
     ALU --> A
     ALU --> C
 
