@@ -1,4 +1,4 @@
-## 2bit CPU 処理フロー
+# 2bit CPU 処理フロー
 
 ```mermaid
 flowchart TD
