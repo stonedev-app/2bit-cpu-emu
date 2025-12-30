@@ -1,17 +1,17 @@
-/// A simple 4-bit unsigned integer type.
+/// 4bit構造体
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct U4 {
     value: u8,
 }
 
 impl U4 {
-    /// Masks the input value to fit into 4 bits.
+    /// 4bitにマスクする
     pub fn mask(value: u8) -> Self {
         U4 {
             value: value & 0b1111,
         }
     }
-    /// Retrieves the underlying u8 value.
+    /// 内部値を取得する
     pub fn get(self) -> u8 {
         self.value
     }
