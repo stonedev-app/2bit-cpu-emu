@@ -1,4 +1,4 @@
-use crate::models::U2;
+use crate::models::bit::U2;
 
 /// IOポート構造体
 #[derive(Debug, Clone, Copy)]

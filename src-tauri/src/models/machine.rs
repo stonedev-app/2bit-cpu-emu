@@ -1,8 +1,8 @@
 use std::default;
 
+use crate::models::bit::U4;
 use crate::models::Cpu;
 use crate::models::IoPort;
-use crate::models::U4;
 
 /// マシン構造体
 #[derive(Debug)]

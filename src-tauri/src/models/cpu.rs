@@ -1,4 +1,4 @@
-use crate::models::U2;
+use crate::models::bit::U2;
 
 /// CPU構造体
 #[derive(Debug)]

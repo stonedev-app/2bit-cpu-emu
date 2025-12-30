@@ -1,4 +1,7 @@
-use crate::models::{Cpu, IoPort, Machine, U2, U4};
+use crate::models::{
+    bit::{U2, U4},
+    Cpu, IoPort, Machine,
+};
 
 /// マシンを1ティック進める関数
 /// # Arguments
