@@ -83,12 +83,12 @@ fn fetch_instruction(machine: &Machine) -> U4 {
 /// ADD命令を実行する関数
 /// {C, A} ← A + Im
 fn execute_add(cpu: &Cpu, operand: U2) -> Cpu {
-    let sum = (cpu.a_reg.get() as u16) + (operand.get() as u16);
+    let sum = cpu.a_reg.get() + operand.get();
     let c_flag = sum > 0b11;
 
     Cpu {
         pc_counter: U2::mask(cpu.pc_counter.get() + 1),
-        a_reg: U2::mask(sum as u8),
+        a_reg: U2::mask(sum),
         c_flag,
     }
 }
