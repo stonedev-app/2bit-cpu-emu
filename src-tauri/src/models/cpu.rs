@@ -1,7 +1,7 @@
 use crate::models::bit::U2;
 
 /// CPU構造体
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct Cpu {
     /// プログラムカウンタ(2bit)
     pub pc_counter: U2,

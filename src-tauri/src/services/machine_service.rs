@@ -56,15 +56,7 @@ pub fn tick(machine: &Machine) -> Machine {
                 rom: machine.rom,
             }
         }
-        _ => Machine {
-            cpu: Cpu {
-                pc_counter: machine.cpu.pc_counter,
-                a_reg: machine.cpu.a_reg,
-                c_flag: machine.cpu.c_flag,
-            },
-            io_port: machine.io_port,
-            rom: machine.rom,
-        },
+        _ => *machine, // 不正なオペコードの場合は状態を変更しない
     }
 }
 
