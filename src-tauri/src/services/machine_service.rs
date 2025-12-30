@@ -164,7 +164,7 @@ mod tests {
     /// fetch_instruction がROMから正しく命令を取得することを確認するテスト
     #[test]
     fn test_fetch_instruction() {
-        let mut machine = Machine::default();
+        let mut machine = Machine::reset();
         machine.rom[0] = U4::mask(0b00_01);
         machine.rom[1] = U4::mask(0b01_10);
         machine.rom[2] = U4::mask(0b10_11);
@@ -277,7 +277,7 @@ mod tests {
     /// tick関数でADD命令を実行するテスト
     #[test]
     fn test_tick_add() {
-        let mut machine = Machine::default();
+        let mut machine = Machine::reset();
         machine.rom[0] = U4::mask(0b00_01); // ADD 1
         machine.cpu.a_reg = U2::mask(0b10); // Aレジスタに2をセット
 
@@ -290,7 +290,7 @@ mod tests {
     /// tick関数でIN命令を実行するテスト
     #[test]
     fn test_tick_in() {
-        let mut machine = Machine::default();
+        let mut machine = Machine::reset();
         machine.rom[0] = U4::mask(0b01_00); // IN
         machine.io_port.input_port = U2::mask(0b10); // 入力ポートに2をセット
 
@@ -303,7 +303,7 @@ mod tests {
     /// tick関数でOUT命令を実行するテスト
     #[test]
     fn test_tick_out() {
-        let mut machine = Machine::default();
+        let mut machine = Machine::reset();
         machine.rom[0] = U4::mask(0b10_11); // OUT 3
 
         let new_machine = tick(&machine);
@@ -315,7 +315,7 @@ mod tests {
     /// tick関数でJNC命令を実行するテスト
     #[test]
     fn test_tick_jnc() {
-        let mut machine = Machine::default();
+        let mut machine = Machine::reset();
         machine.rom[0] = U4::mask(0b11_10); // JNC 2
         machine.cpu.c_flag = false; // ジャンプする
 
