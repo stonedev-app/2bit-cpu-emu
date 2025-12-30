@@ -4,6 +4,7 @@ use crate::models::Cpu;
 use crate::models::IoPort;
 
 /// マシン構造体
+#[derive(Debug)]
 pub struct Machine {
     /// CPU構造体
     pub cpu: Cpu,

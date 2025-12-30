@@ -1,4 +1,5 @@
 /// CPU構造体
+#[derive(Debug)]
 pub struct Cpu {
     /// プログラムカウンタ(2bit)
     pub pc_counter: u8,
