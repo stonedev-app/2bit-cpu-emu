@@ -9,6 +9,8 @@ pub struct Machine {
     pub cpu: Cpu,
     /// IOポート構造体
     pub io_port: IoPort,
+    /// ROMデータ（4bit x 4）
+    pub rom: [u8; 4],
 }
 
 impl Machine {
@@ -23,6 +25,7 @@ impl Machine {
     /// assert_eq!(reset_machine.cpu.c_flag, false);
     /// assert_eq!(reset_machine.io_port.input_port, 0);
     /// assert_eq!(reset_machine.io_port.output_port, 0);
+    /// assert_eq!(reset_machine.rom, [0; 4]);
     /// ```
     pub fn reset() -> Self {
         Self::default()
@@ -39,6 +42,8 @@ impl default::Default for Machine {
             cpu: Cpu::default(),
             // デフォルトのIOポート状態を初期化
             io_port: IoPort::default(),
+            // ROMをゼロで初期化
+            rom: [0; 4],
         }
     }
 }
