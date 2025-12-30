@@ -1,83 +1,6 @@
 use crate::models::{Cpu, IoPort, Machine};
 use crate::utils::mask::mask_2bit;
 
-/// 命令をデコードする関数
-/// # Arguments
-/// * `instruction` - 4ビット命令
-/// # Returns
-/// * (オペコード, オペランド)のタプル
-fn decode_instruction(instruction: u8) -> (u8, u8) {
-    let opcode = (instruction >> 2) & 0b11;
-    let operand = instruction & 0b11;
-    (opcode, operand)
-}
-
-/// ROMから命令をフェッチする関数
-/// # Arguments
-/// * `machine` - マシン状態
-/// # Returns
-/// * フェッチされた命令
-fn fetch_instruction(machine: &Machine) -> u8 {
-    machine.rom[machine.cpu.pc_counter as usize]
-}
-
-/// ADD命令を実行する関数
-/// {C, A} ← A + Im
-fn execute_add(cpu: &Cpu, operand: u8) -> Cpu {
-    let sum = (cpu.a_reg as u16) + (operand as u16);
-    let a_result = mask_2bit(sum as u8);
-    let c_flag = sum > 0b11;
-
-    Cpu {
-        pc_counter: mask_2bit(cpu.pc_counter + 1),
-        a_reg: a_result,
-        c_flag,
-    }
-}
-
-/// IN命令を実行する関数
-/// A ← INPUT
-/// C ← 0
-fn execute_in(cpu: &Cpu, input_port: u8) -> Cpu {
-    Cpu {
-        pc_counter: mask_2bit(cpu.pc_counter + 1),
-        a_reg: input_port,
-        c_flag: false,
-    }
-}
-
-/// OUT命令を実行する関数
-/// OUTPUT ← Im
-/// C ← 0
-fn execute_out(cpu: &Cpu, output_value: u8) -> (Cpu, u8) {
-    let new_cpu = Cpu {
-        pc_counter: mask_2bit(cpu.pc_counter + 1),
-        a_reg: cpu.a_reg,
-        c_flag: false,
-    };
-    (new_cpu, output_value)
-}
-
-/// JNC命令を実行する関数
-/// if C == 0:
-///     PC ← Addr
-/// else:
-///     PC ← PC + 1
-/// C ← 0
-fn execute_jnc(cpu: &Cpu, addr: u8) -> Cpu {
-    let new_pc = if !cpu.c_flag {
-        addr // キャリーフラグが0ならアドレスにジャンプ
-    } else {
-        mask_2bit(cpu.pc_counter + 1) // キャリーフラグが1なら次の命令へ
-    };
-
-    Cpu {
-        pc_counter: new_pc,
-        a_reg: cpu.a_reg,
-        c_flag: false,
-    }
-}
-
 /// マシンを1ティック進める関数
 /// # Arguments
 /// * `machine` - マシン状態
@@ -152,6 +75,83 @@ pub fn tick(machine: &Machine) -> Machine {
             },
             rom: machine.rom,
         },
+    }
+}
+
+/// 命令をデコードする関数
+/// # Arguments
+/// * `instruction` - 4ビット命令
+/// # Returns
+/// * (オペコード, オペランド)のタプル
+fn decode_instruction(instruction: u8) -> (u8, u8) {
+    let opcode = (instruction >> 2) & 0b11;
+    let operand = instruction & 0b11;
+    (opcode, operand)
+}
+
+/// ROMから命令をフェッチする関数
+/// # Arguments
+/// * `machine` - マシン状態
+/// # Returns
+/// * フェッチされた命令
+fn fetch_instruction(machine: &Machine) -> u8 {
+    machine.rom[machine.cpu.pc_counter as usize]
+}
+
+/// ADD命令を実行する関数
+/// {C, A} ← A + Im
+fn execute_add(cpu: &Cpu, operand: u8) -> Cpu {
+    let sum = (cpu.a_reg as u16) + (operand as u16);
+    let a_result = mask_2bit(sum as u8);
+    let c_flag = sum > 0b11;
+
+    Cpu {
+        pc_counter: mask_2bit(cpu.pc_counter + 1),
+        a_reg: a_result,
+        c_flag,
+    }
+}
+
+/// IN命令を実行する関数
+/// A ← INPUT
+/// C ← 0
+fn execute_in(cpu: &Cpu, input_port: u8) -> Cpu {
+    Cpu {
+        pc_counter: mask_2bit(cpu.pc_counter + 1),
+        a_reg: input_port,
+        c_flag: false,
+    }
+}
+
+/// OUT命令を実行する関数
+/// OUTPUT ← Im
+/// C ← 0
+fn execute_out(cpu: &Cpu, output_value: u8) -> (Cpu, u8) {
+    let new_cpu = Cpu {
+        pc_counter: mask_2bit(cpu.pc_counter + 1),
+        a_reg: cpu.a_reg,
+        c_flag: false,
+    };
+    (new_cpu, output_value)
+}
+
+/// JNC命令を実行する関数
+/// if C == 0:
+///     PC ← Addr
+/// else:
+///     PC ← PC + 1
+/// C ← 0
+fn execute_jnc(cpu: &Cpu, addr: u8) -> Cpu {
+    let new_pc = if !cpu.c_flag {
+        addr // キャリーフラグが0ならアドレスにジャンプ
+    } else {
+        mask_2bit(cpu.pc_counter + 1) // キャリーフラグが1なら次の命令へ
+    };
+
+    Cpu {
+        pc_counter: new_pc,
+        a_reg: cpu.a_reg,
+        c_flag: false,
     }
 }
 
