@@ -20,10 +20,7 @@ pub fn tick(machine: &Machine) -> Machine {
             let new_cpu = execute_add(&machine.cpu, operand);
             Machine {
                 cpu: new_cpu,
-                io_port: IoPort {
-                    input_port: machine.io_port.input_port,
-                    output_port: machine.io_port.output_port,
-                },
+                io_port: machine.io_port,
                 rom: machine.rom,
             }
         }
@@ -32,10 +29,7 @@ pub fn tick(machine: &Machine) -> Machine {
             let new_cpu = execute_in(&machine.cpu, machine.io_port.input_port);
             Machine {
                 cpu: new_cpu,
-                io_port: IoPort {
-                    input_port: machine.io_port.input_port,
-                    output_port: machine.io_port.output_port,
-                },
+                io_port: machine.io_port,
                 rom: machine.rom,
             }
         }
@@ -56,10 +50,7 @@ pub fn tick(machine: &Machine) -> Machine {
             let new_cpu = execute_jnc(&machine.cpu, operand);
             Machine {
                 cpu: new_cpu,
-                io_port: IoPort {
-                    input_port: machine.io_port.input_port,
-                    output_port: machine.io_port.output_port,
-                },
+                io_port: machine.io_port,
                 rom: machine.rom,
             }
         }
@@ -69,10 +60,7 @@ pub fn tick(machine: &Machine) -> Machine {
                 a_reg: machine.cpu.a_reg,
                 c_flag: machine.cpu.c_flag,
             },
-            io_port: IoPort {
-                input_port: machine.io_port.input_port,
-                output_port: machine.io_port.output_port,
-            },
+            io_port: machine.io_port,
             rom: machine.rom,
         },
     }

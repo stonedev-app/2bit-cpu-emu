@@ -1,4 +1,5 @@
 /// IOポート構造体
+#[derive(Debug, Clone, Copy)]
 pub struct IoPort {
     /// 入力ポート(2bit)
     pub input_port: u8,
